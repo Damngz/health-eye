@@ -1,0 +1,34 @@
+<div class="bg-white mt-2">
+  <div class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
+    <h2 class="text-4xl leading-28 font-semibold text-[#4D38F5]">Pacientes</h2>
+
+    <div class="pb-10">
+      <div class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
+        <div class="shrink-0 select-none sm:text-sm/6 pr-2">
+          <img src="./search.svg" alt="" width="16"/>
+        </div>
+        <input 
+          type="text" 
+          name="patient" 
+          id="patient" 
+          [(ngModel)]="filterText" 
+          (input)="onFilterChange()" 
+          class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6" 
+          placeholder="Patient name"
+        />
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
+
+      <div *ngFor="let patient of filteredPatients" class="group">
+        <a href="/monitoring/{{ patient.patientId }}">
+          <img src="./{{ patient.img }}" alt="Imagen del paciente" class="aspect-square w-full rounded-lg bg-gray-200 object-cover group-hover:opacity-75 xl:aspect-7/8">
+          <h3 class="mt-4 text-lg font-medium text-gray-900">{{ patient.firstName }} {{ patient.lastName }}</h3>
+          <p class="mt-1 text-sm text-gray-700">{{ patient.age }} años - {{ patient.medicalRecord }}</p>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
