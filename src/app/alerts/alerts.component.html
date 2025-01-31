@@ -1,0 +1,22 @@
+<div class="bg-white mt-10">
+  <div class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
+    <h2 class="text-4xl font-bold tracking-tight text-gray-900">Alertas registradas</h2>
+
+    <div *ngIf="alerts.length > 0; else noAlerts">
+      <div *ngFor="let alert of alerts" class="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
+        <div class="group relative p-4 lg:min-w-[600px] min-w-[200px] rounded-md text-white" [ngClass]="{'bg-red-600': alert.alertType === 'Critical', 'bg-yellow-600': alert.alertType === 'Warning'}">
+          <p><strong>Hora:</strong> {{ alert.timestamp | date:'dd/MM/yyyy HH:mm:ss':'America/Santiago' }}</p>
+          <p><strong>Mensaje:</strong> {{ alert.alertMessage }}</p>
+          <p><strong>Tipo:</strong> 
+            <span >
+              {{ alert.alertType }}
+            </span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ng-template #noAlerts>
+    <p class="text-center text-gray-500">No hay alertas registradas.</p>
+  </ng-template>
+</div>
