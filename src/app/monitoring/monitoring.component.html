@@ -1,0 +1,83 @@
+<div class="bg-white py-24 sm:py-32" *ngIf="patient && measurements.length > 1">
+  <div class="flex flex-col text-center gap-2">
+    <h1 class="text-5xl font-semibold">{{ patient.firstName }} {{ patient.lastName }}</h1>
+    <p class="text-gray-600 text-xl">{{ patient.age }} años - {{ patient.medicalRecord }}</p>
+    <p class="text-gray-600 text-xl">Estatura: {{ patient.height }}m - Peso: {{ patient.weight }}kg</p>
+    <div class="flex flex-row items-center justify-center gap-2 mt-4">
+      <a href="/monitoring/{{patient.patientId}}/alerts" class="p-3 bg-[#4D38F5] text-white font-semibold rounded-md hover:cursor-pointer hover:opacity-90 focus:opacity-85 active:opacity-80">Resumen de alertas</a>
+    </div>
+  </div>
+  <div class="mt-10 mx-30">
+    <h2 class="text-[#4D38F5] font-semibold text-xl mb-2">Nueva medición</h2>
+    <div class="px-6 py-4 grid grid-cols-4 gap-x-6 gap-y-8 sm:grid-cols-12 bg-[#4D38F5] rounded-md">
+      <div class="sm:col-span-2 sm:col-start-1">
+        <label for="heartrate" class="block text-sm/6 font-medium text-white">Frecuencia cardíaca (HR)</label>
+        <div class="mt-2">
+          <input type="number" name="heartrate" [(ngModel)]="newMeasurement.heartRate" placeholder="{{ measurements[0].heartRate }}" id="heartrate" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+        </div>
+      </div>
+  
+      <div class="sm:col-span-2">
+        <label for="saturation" class="block text-sm/6 font-medium text-white">Saturación de Oxígeno (SpO₂)</label>
+        <div class="mt-2">
+          <input type="number" name="saturation" [(ngModel)]="newMeasurement.oxygenSaturation" placeholder="{{ measurements[0].oxygenSaturation }}" id="saturation" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+        </div>
+      </div>
+  
+      <div class="sm:col-span-2">
+        <label for="pressure" class="block text-sm/6 font-medium text-white">Presión sistólica (mmHg)</label>
+        <div class="mt-2">
+          <input type="number" name="pressure" [(ngModel)]="newMeasurement.systolicPressure" placeholder="{{ measurements[0].systolicPressure }}" id="pressure" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+        </div>
+      </div>
+  
+      <div class="sm:col-span-2">
+        <label for="pressure2" class="block text-sm/6 font-medium text-white">Presión diastólica (mmHg)</label>
+        <div class="mt-2">
+          <input type="number" name="pressure2" [(ngModel)]="newMeasurement.diastolicPressure" placeholder="{{ measurements[0].diastolicPressure }}" id="pressure2" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+        </div>
+      </div>
+  
+      <div class="sm:col-span-2">
+        <label for="temperature" class="block text-sm/6 font-medium text-white">Temperatura Corporal (°C)</label>
+        <div class="mt-2">
+          <input type="number" name="temperature" [(ngModel)]="newMeasurement.bodyTemperature" placeholder="{{ measurements[0].bodyTemperature }}" id="temperature" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+        </div>
+      </div>
+  
+      <div class="sm:col-span-2 flex flex-col justify-center items-center">
+        <button (click)="sendMeasurement(patient)" class="p-3 rounded-md bg-white text-[#4D38F5] font-semibold cursor-pointer hover:opacity-90 focus:opacity-85 active:opacity-80" >
+          Enviar medición
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="border-b-1 border-gray-200 py-5"></div>
+  <div class="mx-auto max-w-8xl px-6 lg:px-0 py-8">
+    <h3 class="text-gray-500 font-semibold text-center py-4">
+      Hora de la medición: {{ measurements[0].timestamp | date:'dd-MM-yyyy, HH:mm:ss':'America/Santiago' }}
+    </h3>
+    <dl class="grid grid-cols-1 gap-x-0 gap-y-16 text-center lg:grid-cols-4">
+      <div class="mx-auto flex max-w-md flex-col gap-y-4 hover:cursor-pointer hover:opacity-70 p-6 rounded-md" [ngClass]="{'bg-[#4D38F5]': chartVariable === 'heartRate'}" (click)="onMetricClick('heartRate')">
+        <dt class="text-base/7 text-gray-600" [ngClass]="{'text-white': chartVariable === 'heartRate'}">Frecuencia Cardíaca (HR)</dt>
+        <dd class="order-first text-3xl font-semibold tracking-tight text-gray-900 sm:text-5xl" [ngClass]="{'text-white': chartVariable === 'heartRate'}">{{ measurements[0].heartRate }} LPM</dd>
+      </div>
+      <div class="mx-auto flex max-w-md flex-col gap-y-4 hover:cursor-pointer hover:opacity-70 p-6 rounded-md" [ngClass]="{'bg-[#4D38F5]': chartVariable === 'oxygenSaturation'}" (click)="onMetricClick('oxygenSaturation')">
+        <dt class="text-base/7 text-gray-600" [ngClass]="{'text-white': chartVariable === 'oxygenSaturation'}">Saturación de Oxígeno (SpO₂)</dt>
+        <dd class="order-first text-3xl font-semibold tracking-tight text-gray-900 sm:text-5xl" [ngClass]="{'text-white': chartVariable === 'oxygenSaturation'}">{{ measurements[0].oxygenSaturation }} %</dd>
+      </div>
+      <div class="mx-auto flex max-w-md flex-col gap-y-4 hover:cursor-pointer hover:opacity-70 p-6 rounded-md" [ngClass]="{'bg-[#4D38F5]': chartVariable === 'systolicPressure'}" (click)="onMetricClick('systolicPressure')">
+        <dt class="text-base/7 text-gray-600" [ngClass]="{'text-white': chartVariable === 'systolicPressure'}">Presión Arterial (BP)</dt>
+        <dd class="order-first text-3xl font-semibold tracking-tight text-gray-900 sm:text-5xl" [ngClass]="{'text-white': chartVariable === 'systolicPressure'}">{{ measurements[0].systolicPressure }}/{{ measurements[0].diastolicPressure }} mmHg</dd>
+      </div>
+      <div class="mx-auto flex max-w-md flex-col gap-y-4 hover:cursor-pointer hover:opacity-70 p-6 rounded-md" [ngClass]="{'bg-[#4D38F5]': chartVariable === 'bodyTemperature'}" (click)="onMetricClick('bodyTemperature')">
+        <dt class="text-base/7 text-gray-600" [ngClass]="{'text-white': chartVariable === 'bodyTemperature'}">Temperatura Corporal</dt>
+        <dd class="order-first text-3xl font-semibold tracking-tight text-gray-900 sm:text-5xl" [ngClass]="{'text-white': chartVariable === 'bodyTemperature'}">{{ measurements[0].bodyTemperature }} °C</dd>
+      </div>
+    </dl>
+  </div>
+  <div class="flex px-[72px] w-full">
+    <app-chart class="w-full" [measurements]="measurements" [title]="chartTitle" [variable]="chartVariable"></app-chart>
+  </div>
+</div>

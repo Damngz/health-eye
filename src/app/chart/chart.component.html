@@ -1,0 +1,15 @@
+<div class="rounded-md p-4 w-full">
+  <div class="flex justify-start items-end mb-6 gap-4">
+    <h3 class="pl-3 font-semibold text-[#4D38F5] text-3xl">Historial de {{ title }}</h3>
+  </div>
+  <apx-chart 
+    [series]="series"
+    [chart]="chart" 
+    [xaxis]="xaxis" 
+    [dataLabels]="dataLabels"
+    [colors]="colors"
+    [fill]="fill"
+    [tooltip]="tooltip"
+  >
+  </apx-chart>
+</div>
