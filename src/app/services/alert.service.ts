@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AlertService {
-  private apiUrl = 'http://localhost:8082/alerts';
+  private apiUrl = 'http://50.16.250.37:8082/alerts';
 
   constructor(private http: HttpClient) {}
 

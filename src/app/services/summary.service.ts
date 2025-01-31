@@ -7,7 +7,7 @@ import { Measurement } from './measurement.service';
   providedIn: 'root'
 })
 export class SummaryService {
-  private apiUrl = 'http://localhost:8083/send';
+  private apiUrl = 'http://50.16.250.37:8083/send';
 
   constructor(private http: HttpClient) {}
 
