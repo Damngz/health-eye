@@ -1,4 +1,12 @@
-<div class="bg-white mt-10">
+<div class="bg-white py-24 sm:py-32" *ngIf="patient">
+  <div class="ml-20">
+    <a href="/monitoring/{{patient.patientId}}" class="p-4 bg-[#4D38F5] font-semibold text-white rounded-md hover:opacity-90 active:opacity-80 focus:opacity-85">&larr; Volver</a>
+  </div>
+  <div class="flex flex-col text-center gap-2">
+    <h1 class="text-5xl font-semibold">{{ patient.firstName }} {{ patient.lastName }}</h1>
+    <p class="text-gray-600 text-xl">{{ patient.age }} años - {{ patient.medicalRecord }}</p>
+    <p class="text-gray-600 text-xl">Estatura: {{ patient.height }}m - Peso: {{ patient.weight }}kg</p>
+  </div>
   <div class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
     <h2 class="text-4xl font-bold tracking-tight text-gray-900">Alertas registradas</h2>
 
@@ -17,6 +25,6 @@
     </div>
   </div>
   <ng-template #noAlerts>
-    <p class="text-center text-gray-500">No hay alertas registradas.</p>
+    <p class="text-center text-gray-500 my-20">No hay alertas registradas.</p>
   </ng-template>
 </div>

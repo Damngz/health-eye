@@ -56,7 +56,7 @@ export class MonitoringComponent {
       this.loadMeasurements(patientId);
     }
 
-    this.autoSendSubscription = interval(60000).subscribe(() => {
+    this.autoSendSubscription = interval(600000).subscribe(() => {
       this.sendLastFiveMeasurements();
     });
   }

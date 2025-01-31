@@ -17,8 +17,8 @@ export interface Measurement {
   providedIn: 'root',
 })
 export class MeasurementService {
-  private apiUrl = 'http://localhost:8081/measurements';
-  private rabbitMQApiUrl = 'http://localhost:8082/send';
+  private apiUrl = 'http://50.16.250.37:8081/measurements';
+  private rabbitMQApiUrl = 'http://50.16.250.37:8082/send';
 
   constructor(private http: HttpClient) {}
 
